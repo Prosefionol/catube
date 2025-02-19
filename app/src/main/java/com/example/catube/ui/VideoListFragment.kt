@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.catube.R
 import com.example.catube.databinding.FragmentVideoListBinding
+import com.example.catube.model.SimpleVideo
 
 class VideoListFragment : Fragment() {
     private var _binding: FragmentVideoListBinding? = null
@@ -17,6 +20,16 @@ class VideoListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentVideoListBinding.inflate(layoutInflater, container, false)
+
+        binding.textStub.setOnClickListener {
+            val direction = VideoListFragmentDirections.actionVideoListFragmentToVideoPlayerFragment(
+                SimpleVideo(
+                    videoUrl = "www",
+                    videoTitle = "Vidosadasdasdasdad"
+                )
+            )
+            findNavController().navigate(direction)
+        }
 
         return binding.root
     }

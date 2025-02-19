@@ -1,6 +1,10 @@
+import org.jetbrains.kotlin.fir.declarations.builder.buildScript
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.safe.args)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -66,4 +70,7 @@ dependencies {
     implementation (libs.converter.moshi)
     implementation (libs.moshi)
     implementation (libs.moshi.kotlin)
+
+    implementation (libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 }
