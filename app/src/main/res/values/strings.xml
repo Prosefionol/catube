@@ -6,4 +6,5 @@
     <string name="refresh_button">Try again</string>
     <string name="unknown_duration">0:00</string>
     <string name="video_preview">Video preview</string>
+    <string name="duration_builder">%1$s:%2$s</string>
 </resources>
