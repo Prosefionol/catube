@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.catube.viewmodel.VideoListViewModel
+import com.example.catube.viewmodel.VideoPlayerViewModel
 
 class ViewModelFactory(
     owner: SavedStateRegistryOwner
@@ -17,6 +18,9 @@ class ViewModelFactory(
         val viewModel = when(modelClass) {
             VideoListViewModel::class.java -> {
                 VideoListViewModel(handle)
+            }
+            VideoPlayerViewModel::class.java -> {
+                VideoPlayerViewModel(handle)
             }
             else -> throw IllegalStateException()
         }

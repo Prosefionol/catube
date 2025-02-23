@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity(), ActionBar {
     }
 
     override fun setTitle(title: String) {
-        val correctTitle = if (title.length > 10) {
-            "${title.substring(0, 10)}..."
+        val correctTitle = if (title.length > 30) {
+            "${title.substring(0, 29)}..."
         } else {
             title
         }

@@ -10,10 +10,11 @@ import com.example.catube.R
 import com.example.catube.databinding.ItemViewBinding
 import com.example.catube.model.Video
 import com.example.catube.model.toSimpleVideo
-import com.example.catube.ui.VideoListFragmentDirections
+import com.example.catube.ui.Navigator
 
 class VideoAdapter(
-    private val context: Context
+    private val context: Context,
+    private val navigator: Navigator
 ): RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
     private var videos: List<Video> = emptyList()
@@ -30,9 +31,10 @@ class VideoAdapter(
                 binding.rvDuration.text = context.getString(R.string.unknown_duration)
             }
             else {
-                val minutes = video.videoDuration / 60
+                val hours = video.videoDuration / 3600
+                val minutes = (video.videoDuration % 3600) / 60
                 val seconds = video.videoDuration % 60
-                val duration = context.getString(R.string.duration_builder, minutes.toString(), seconds.toString())
+                val duration = context.getString(R.string.duration_builder, hours, minutes, seconds)
                 binding.rvDuration.text = duration
             }
             Glide.with(context)
@@ -40,10 +42,7 @@ class VideoAdapter(
                 .error(R.drawable.cat_stub)
                 .into(binding.rvImage)
             binding.root.setOnClickListener {
-                val direction = VideoListFragmentDirections.actionVideoListFragmentToVideoPlayerFragment(
-                    video.toSimpleVideo()
-                )
-                // findNavController().navigate(direction)
+                navigator.watchVideo(video.toSimpleVideo())
             }
         }
     }

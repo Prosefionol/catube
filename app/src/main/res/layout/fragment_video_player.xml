@@ -59,11 +59,12 @@
         android:id="@+id/refresh_group"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:constraint_referenced_ids="refresh_tv, refresh_button"
         />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/music_group"
+        android:id="@+id/video_group"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:constraint_referenced_ids="video_title, video_player"

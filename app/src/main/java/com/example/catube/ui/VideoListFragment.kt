@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.catube.databinding.FragmentVideoListBinding
+import com.example.catube.model.SimpleVideo
 import com.example.catube.model.api.ErrorAnswerApi
 import com.example.catube.model.api.PendingAnswerApi
 import com.example.catube.model.api.SuccessAnswerApi
@@ -17,7 +19,7 @@ import com.example.catube.ui.adapters.VideoAdapter
 import com.example.catube.viewmodel.VideoListViewModel
 import com.example.catube.viewmodel.utils.ViewModelFactory
 
-class VideoListFragment : Fragment() {
+class VideoListFragment : Fragment(), Navigator {
     private var _binding: FragmentVideoListBinding? = null
     private val binding
         get() = _binding!!
@@ -34,7 +36,7 @@ class VideoListFragment : Fragment() {
     ): View {
         _binding = FragmentVideoListBinding.inflate(layoutInflater, container, false)
 
-        adapter = VideoAdapter(requireContext())
+        adapter = VideoAdapter(requireContext(), this)
         binding.rv.adapter = adapter
         binding.rv.layoutManager = LinearLayoutManager(requireContext())
 
@@ -76,5 +78,12 @@ class VideoListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun watchVideo(simpleVideo: SimpleVideo) {
+        val direction = VideoListFragmentDirections.actionVideoListFragmentToVideoPlayerFragment(
+            simpleVideo
+        )
+        findNavController().navigate(direction)
     }
 }
