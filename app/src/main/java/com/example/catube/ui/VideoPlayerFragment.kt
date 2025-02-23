@@ -1,5 +1,6 @@
 package com.example.catube.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -38,9 +39,22 @@ class VideoPlayerFragment : Fragment() {
 
         val title = args.video.videoTitle
         val videoUrl = args.video.videoUrl
+        val screenOrientation = resources.configuration.orientation
 
         (requireActivity() as ActionBar).setTitle(title)
         binding.videoTitle.text = title
+
+        when (screenOrientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                binding.videoTitle.isVisible = false
+            }
+            Configuration.ORIENTATION_PORTRAIT -> {
+                binding.videoTitle.isVisible = true
+            }
+            else -> {
+                binding.videoTitle.isVisible = true
+            }
+        }
 
         viewModel.playbackPosition.observe(viewLifecycleOwner) {
             videoPlayer.seekTo(it)
@@ -52,7 +66,8 @@ class VideoPlayerFragment : Fragment() {
         videoPlayer.addListener(object: Player.Listener {
             override fun onPlayerError(error: PlaybackException) {
                 viewModel.setPlaybackPosition(videoPlayer.currentPosition)
-                binding.videoGroup.isVisible = false
+                binding.videoTitle.isVisible = false
+                binding.videoPlayer.isVisible = false
                 binding.refreshGroup.isVisible = true
                 binding.refreshTv.text = error.message
                 super.onPlayerError(error)
@@ -64,7 +79,8 @@ class VideoPlayerFragment : Fragment() {
 
         binding.refreshButton.setOnClickListener {
             videoPlayer.prepare()
-            binding.videoGroup.isVisible = true
+            binding.videoTitle.isVisible = true
+            binding.videoPlayer.isVisible = true
             binding.refreshGroup.isVisible = false
             videoPlayer.play()
         }

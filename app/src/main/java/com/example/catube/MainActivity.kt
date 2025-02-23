@@ -1,5 +1,6 @@
 package com.example.catube
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -25,10 +26,18 @@ class MainActivity : AppCompatActivity(), ActionBar {
     }
 
     override fun setTitle(title: String) {
-        val correctTitle = if (title.length > 30) {
-            "${title.substring(0, 29)}..."
-        } else {
-            title
+        val orientation = resources.configuration.orientation
+        val correctTitle = when (orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                title
+            }
+            else -> {
+                if (title.length > 30) {
+                    "${title.substring(0, 29)}..."
+                } else {
+                    title
+                }
+            }
         }
         this.supportActionBar?.title = correctTitle
     }
