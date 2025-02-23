@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.catube.R
 import com.example.catube.databinding.FragmentVideoListBinding
 import com.example.catube.model.SimpleVideo
 import com.example.catube.model.api.ErrorAnswerApi
@@ -81,8 +82,12 @@ class VideoListFragment : Fragment(), Navigator {
     }
 
     override fun watchVideo(simpleVideo: SimpleVideo) {
+        var correctVideo = simpleVideo
+        if (binding.testSwitch.isChecked) {
+            correctVideo = simpleVideo.copy(videoUrl = getString(R.string.test_video))
+        }
         val direction = VideoListFragmentDirections.actionVideoListFragmentToVideoPlayerFragment(
-            simpleVideo
+            correctVideo
         )
         findNavController().navigate(direction)
     }
